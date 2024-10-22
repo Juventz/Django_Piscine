@@ -36,9 +36,8 @@ def render_template(file_path):
         <p> Age: {age} </p>
         <p> Profession: {profession} </p>
     </header>
-    <section>
-{rendered_content}
-    </section>
+    <h2> Exo 00 </h2>
+    {rendered_content}
 </body>
 </html>"""
 
