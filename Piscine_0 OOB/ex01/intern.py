@@ -25,10 +25,10 @@ def main():
 
         print(intern_named)
         print(intern_nonamed)
-        print("---------------")
+        print("-" * 20)
 
         print(intern_nonamed.make_coffee())
-        print("---------------")
+        print("-" * 20)
         print(intern_named.work())
 
     except Exception as e:
