@@ -22,7 +22,7 @@ def test_text():
     assert str(Text('"')) == '&quot;'
     print('Text behaviour : OK.')
 
-    
+
 def test_elem_basics():
     # Default behaviour :
     assert str(Elem()) == '<div></div>'
@@ -88,7 +88,7 @@ def test_errors():
         raise(Exception("incorrect behaviour."))
     except Exception as e:
         assert isinstance(e, Elem.ValidationError)
-    
+  
     try:
         elem = Elem(content='')
         raise(Exception("incorrect behaviour."))
@@ -115,7 +115,8 @@ def test():
     test_embedding()
     test_empty_texts()
     test_errors()
-    
+
+
 if __name__ == '__main__':
     try :
         test()
