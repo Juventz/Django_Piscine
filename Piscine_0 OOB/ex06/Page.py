@@ -13,14 +13,11 @@ class Page:
         return self._check_node(self.root)
 
     def _check_node(self, node):
-        tag = node.tag
-
-        if tag not in ['html', 'head', 'body', 'title', 'meta', 'img', 'table',
-                       'th', 'tr', 'td', 'ul', 'ol',
-                       'li', 'h1', 'h2', 'p', 'div', 'span',
-                       'hr', 'br', Text]:
+        if not isinstance(node, Elem):
             return False
 
+        tag = node.tag
+        print(tag)
         if tag == "html":
             return self._check_html(node)
         elif tag == "head":
@@ -28,14 +25,14 @@ class Page:
         elif tag == "body":
             return self._check_body(node)
         elif tag == "title":
-            return self._check_single_text_node(node, "title")
-        elif tag in ["h1", "h2", "li", "th", "td"]:
+            return self._check_single_text_node(node)
+        elif tag in {"h1", "h2", "li", "th", "td"}:
             return self._check_single_text_node(node, tag)
         elif tag == "p":
             return self._check_only_text(node)
         elif tag == "span":
             return self._check_text_or_p(node)
-        elif tag in ["ul", "ol"]:
+        elif tag in {"ul", "ol"}:
             return self._check_only_li(node)
         elif tag == "tr":
             return self._check_tr(node)
@@ -43,29 +40,41 @@ class Page:
             return self._check_table(node)
         elif tag == "div":
             return self._check_div(node)
-        elif tag in ["hr", "br"]:
+        elif tag in {"hr", "br"}:
             return self._check_empty(node)
 
-        return True
+        return False
 
     def _check_html(self, node):
         if len(node.content) != 2:
             return False
-
-        return (isinstance(node.content[0], Head) and
-                isinstance(node.content[1], Body))
+        head, body = node.content
+        return isinstance(head, Head) and isinstance(body, Body) and \
+               self._check_node(head) and self._check_node(body)
 
     def _check_head(self, node):
-        title_count = sum(1 for elem in node.content
-                          if isinstance(elem, Title))
-        return title_count == 1 and all(isinstance(elem, (Title, Meta))
-                                        for elem in node.content)
+        title_count = sum(isinstance(elem, Title) for elem in node.content)
+        return title_count == 1 and \
+               all(isinstance(elem, (Title, Meta)) for elem in node.content)
 
     def _check_body(self, node):
         allowed_types = {H1, H2, Div, Table, Ul, Ol, Span, Text}
-        return all(type(elem) in allowed_types for elem in node.content)
+        for elem in node.content:
+            if isinstance(elem, Ul):
+                # Vérifier si Ul ne contient que des Li
+                if not self._check_only_li(elem):
+                    return False
+            elif isinstance(elem, Ol):
+                # Vérifier si Ol ne contient que des Li
+                if not self._check_only_li(elem):
+                    return False
+            elif not isinstance(elem, tuple(allowed_types)):
+                return False
+        return True
 
-    def _check_single_text_node(self, node):
+    def _check_single_text_node(self, node, tag=None):
+        if tag and node.tag != tag:
+            return False
         return len(node.content) == 1 and isinstance(node.content[0], Text)
 
     def _check_only_text(self, node):
@@ -75,22 +84,22 @@ class Page:
         return all(isinstance(elem, (Text, P)) for elem in node.content)
 
     def _check_only_li(self, node):
-        return len(node.content) > 0 and all(isinstance(elem, Li)
-                                             for elem in node.content)
+        print(node.content)
+        return len(node.content) > 0 and all(isinstance(elem, Li) for elem in node.content)
 
     def _check_tr(self, node):
         if not node.content:
             return False
         first_type = type(node.content[0])
-        return (all(isinstance(elem, first_type) for elem in node.content)
-                and first_type in {Th, Td})
+        return all(isinstance(elem, first_type) for elem in node.content) and \
+               first_type in {Th, Td}
 
     def _check_table(self, node):
         return all(isinstance(elem, Tr) for elem in node.content)
 
     def _check_div(self, node):
         allowed_types = {H1, H2, Div, Table, Ul, Ol, Span, Text}
-        return all(type(elem) in allowed_types for elem in node.content)
+        return all(isinstance(elem, tuple(allowed_types)) for elem in node.content)
 
     def _check_empty(self, node):
         return len(node.content) == 0
