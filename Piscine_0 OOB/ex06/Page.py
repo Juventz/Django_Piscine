@@ -17,7 +17,7 @@ class Page:
             return False
 
         tag = node.tag
-        print(tag)
+        # print(f"Checking node: {tag}")
         if tag == "html":
             return self._check_html(node)
         elif tag == "head":
@@ -60,13 +60,14 @@ class Page:
     def _check_body(self, node):
         allowed_types = {H1, H2, Div, Table, Ul, Ol, Span, Text}
         for elem in node.content:
-            if isinstance(elem, Ul):
-                # Vérifier si Ul ne contient que des Li
+            # print(f"Checking body content: {elem.tag}") 
+            if isinstance(elem, (Ul, Ol)):
+                # Vérifier si Ul ou Ol ne contient que des Li
                 if not self._check_only_li(elem):
                     return False
-            elif isinstance(elem, Ol):
-                # Vérifier si Ol ne contient que des Li
-                if not self._check_only_li(elem):
+            elif isinstance(elem, Table):
+                # Vérifier si Table ne contient que des Tr
+                if not self._check_table(elem):
                     return False
             elif not isinstance(elem, tuple(allowed_types)):
                 return False
@@ -84,7 +85,6 @@ class Page:
         return all(isinstance(elem, (Text, P)) for elem in node.content)
 
     def _check_only_li(self, node):
-        print(node.content)
         return len(node.content) > 0 and all(isinstance(elem, Li) for elem in node.content)
 
     def _check_tr(self, node):
@@ -95,7 +95,7 @@ class Page:
                first_type in {Th, Td}
 
     def _check_table(self, node):
-        return all(isinstance(elem, Tr) for elem in node.content)
+        return all(self._check_tr(elem) for elem in node.content if isinstance(elem, Tr))
 
     def _check_div(self, node):
         allowed_types = {H1, H2, Div, Table, Ul, Ol, Span, Text}

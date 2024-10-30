@@ -92,13 +92,13 @@ class Span(Elem):
 
 
 class Hr(Elem):
-    def __init__(self):
-        super().__init__(tag='hr', tag_type='simple')
+    def __init__(self, content=None):
+        super().__init__(tag='hr', tag_type='simple', content=[])
 
 
 class Br(Elem):
-    def __init__(self):
-        super().__init__(tag='br', tag_type='simple')
+    def __init__(self, content=None):
+        super().__init__(tag='br', tag_type='simple', content=[])
 
 
 if __name__ == '__main__':
