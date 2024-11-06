@@ -11,7 +11,7 @@ pip install --upgrade --target="$install_dir" "git+https://github.com/jaraco/pat
 
 if [ $? -eq 0 ]; then
     echo "Path.py installed successfully!"
-    python3 my_progra;.py
+    python3 my_program.py
 else
     echo "Installation failed. Check the log file for more information."
 fi
