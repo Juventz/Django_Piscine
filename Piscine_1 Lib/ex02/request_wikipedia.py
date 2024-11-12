@@ -14,10 +14,11 @@ def main():
 
         url = "https://fr.wikipedia.org/w/api.php"
         params = {
-            "action": "query",
+            "action": "parse",
+            "page": article_name,
             "format": "json",
-            "prop": "extracts",
-            "titles": article_name,
+            "prop": "wikitext",
+            "redirects": True,
             "explaintext": True
         }
 
@@ -25,14 +26,12 @@ def main():
         response.raise_for_status()
 
         data = response.json()
-        print(json.dumps(data, indent=4))
-        page = data.get("query", {}).get("pages", {})
-        page_id = next(iter(page.values()))
 
-        if "extract" not in page_id:
+        if "parse" not in data:
             raise ValueError(f"Article {article_name} not found")
 
-        article_text = dewiki.from_string(page_id["extract"])
+        article_text = dewiki.from_string(data["parse"]["wikitext"]["*"])
+
         with open(filename, "w") as file:
             file.write(article_text)
 
