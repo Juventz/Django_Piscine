@@ -6,13 +6,7 @@ import time
 
 def is_valid_link(link):
     href = link['href']
-    if (href.startswith('#') or
-        'Help:' in href
-        or 'File:' in href or
-        ':' in href.split('/')[0]
-        or 'Wikipedia:' in href
-        or 'User:' in href
-        or 'Talk:' in href):
+    if (href.startswith('#') or 'Help:' in href or 'File:' in href):
         return False
 
     if link.find_parent(['i', 'em', 'table', 'sup']):
@@ -43,11 +37,12 @@ def get_first_link(url, history):
                     if full_url not in history:
                         return full_url
 
+        print("It leads to a dead end!")
         return None
 
     except requests.exceptions.RequestException as e:
         if e.response.status_code == 404:
-            print("It's a dead end!")
+            print("It leads to a dead end!")
         else:
             print(f"{type(e).__name__}: {e}")
         return None
