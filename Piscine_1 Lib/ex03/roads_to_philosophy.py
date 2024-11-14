@@ -12,6 +12,9 @@ def is_valid_link(link):
     if link.find_parent(['i', 'em', 'table', 'sup']):
         return False
 
+    if not href.startswith('/wiki/'):
+        return False
+
     return True
 
 
