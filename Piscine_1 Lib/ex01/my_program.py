@@ -1,12 +1,16 @@
 from sys import path
 
-path.insert(0, './local_lib')
 
-from path import Path
+def add_sys_to_path():
+    path.insert(0, './local_lib')
 
 
 def main():
     try:
+        add_sys_to_path()
+
+        from path import Path
+
         folder = Path("my_folder")
         folder.mkdir_p()
 
