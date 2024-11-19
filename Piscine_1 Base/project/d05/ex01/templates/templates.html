@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Ex01: Template Engine{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Template Engine</h1>
+<p>Django's template engine allows dynamic content rendering using:</p>
+<ul>
+    <li><strong>Blocks</strong>: Define customizable content areas.</li>
+    <li><strong>For Loops</strong>: Iterate over items in a context variable.</li>
+    <li><strong>If Statements</strong>: Add conditional logic.</li>
+    <li><strong>Context Variables</strong>: Pass data from views to templates.</li>
+</ul>
+{% endblock %}
