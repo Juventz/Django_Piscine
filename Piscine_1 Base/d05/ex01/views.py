@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 
 def django(request):
-    return render(request, 'ex01/django.html')
+    return render(request, 'django.html')
 
 
 def nav(request):
-    return render(request, 'ex01/display.html')
+    return render(request, 'display.html')
 
 
 def templates(request):
-    return render(request, 'ex01/templates.html')
+    return render(request, 'templates.html')
