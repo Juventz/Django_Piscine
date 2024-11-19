@@ -46,7 +46,7 @@ def main():
 
         if not is_valid_date(argv[3]):
             raise ValueError(f"Invalid date format: {argv[3]}. Expected format\
- is 'YYYY-MM-DD'.")
+ is 'DD-MM-YYYY'.")
 
         geohash(latitude, longitude, date)
 
