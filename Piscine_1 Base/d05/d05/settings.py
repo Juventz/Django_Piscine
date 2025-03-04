@@ -58,7 +58,7 @@ ROOT_URLCONF = 'd05.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "ex00/templates", BASE_DIR / "ex01/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +121,7 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static/"]
+STATICFILES_DIRS = [BASE_DIR / "ex01/static/"]
 
 
 # Default primary key field type
