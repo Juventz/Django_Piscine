@@ -11,6 +11,11 @@ pip install --upgrade -r requirements.txt
 
 echo "Setting up Django"
 cd d05
+
 python3 manage.py migrate
-python3 manage.py collectstatic --noinput
+
+# Suppression du dossier staticfiles pour éviter les doublons
+rm -rf staticfiles/
+python3 manage.py collectstatic
+
 python3 manage.py runserver
