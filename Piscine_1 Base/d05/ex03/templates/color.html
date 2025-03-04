@@ -1,0 +1,41 @@
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Shades Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            height: 40px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Shades Table</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Red</th>
+                <th>Green</th>
+                <th>Blue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in 50|to %}
+                <tr>
+                    <td style="background-color: {{ color_shades.red.i }};"></td>
+                    <td style="background-color: {{ color_shades.green.i }};"></td>
+                    <td style="background-color: {{ color_shades.blue.i }};"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
