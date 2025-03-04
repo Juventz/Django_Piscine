@@ -17,6 +17,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Path to the log file                   
+LOG_FILE_PATH = os.path.join(BASE_DIR, 'ex02', 'logs.txt')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ex00',
     'ex01',
+    'ex02',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'd05.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "ex00/templates", BASE_DIR / "ex01/templates"],
+        'DIRS': [BASE_DIR / "ex00/templates", BASE_DIR / "ex01/templates", BASE_DIR / "ex02/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
