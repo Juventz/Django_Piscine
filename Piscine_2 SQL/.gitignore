@@ -1,0 +1,12 @@
+# env
+django_env/
+.env
+
+# Python: ignore
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Python: migration
+migrations/
