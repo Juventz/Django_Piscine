@@ -1,7 +1,6 @@
 import psycopg2
-from django.shortcuts import render
-from django.db import connection
 from django.http import HttpResponse
+
 
 # Create your views here.
 def init(request):
@@ -28,7 +27,5 @@ def init(request):
                 conn.commit()
         return HttpResponse('OK')
     
-    except psycopg2.DatabaseError as e:
-        return HttpResponse(f"Error: {e}")
     except Exception as e:
         return HttpResponse(f"{type(e).__name__}: {e}")
