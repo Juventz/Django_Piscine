@@ -11,10 +11,16 @@ then
     sudo apt install -y postgresql postgresql-contrib libpq-dev
 fi
 
+# Change to a directory accessible by the postgres user
+cd /tmp
+
 # Set up PostgreSQL database and role
 sudo -u postgres psql -c "CREATE DATABASE djangotraining;"
 sudo -u postgres psql -c "CREATE ROLE djangouser WITH LOGIN PASSWORD 'secret';"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE djangotraining TO djangouser;"
+
+# Grant permissions on the public schema
+sudo -u postgres psql -d djangotraining -c "GRANT CREATE, USAGE ON SCHEMA public TO djangouser;"
 
 # Set PostgreSQL password for the user
 export PGPASSWORD=secret
